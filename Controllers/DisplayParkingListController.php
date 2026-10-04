@@ -7,7 +7,7 @@ class DisplayParkingListController {
   
   }
 
-  public function handle(): array {
-    return $this->useCase->execute();
+  public function handle(IDisplayParkingListPresenter $presenter): void {
+    $this->useCase->execute($presenter);
   }
 }

@@ -1,25 +1,6 @@
 <?php
 
-/** @var ParkingListItemDTO[] $parkings */
-
-$days = [
-    1 => 'Lundi',
-    2 => 'Mardi',
-    3 => 'Mercredi',
-    4 => 'Jeudi',
-    5 => 'Vendredi',
-    6 => 'Samedi',
-    7 => 'Dimanche'
-];
-
-$parkingData = array_map(
-    fn (ParkingListItemDTO $parking) => [
-        'id' => $parking->id,
-        'latitude' => $parking->latitude,
-        'longitude' => $parking->longitude
-    ],
-    $parkings
-);
+/** @var ParkingListViewModel $parkingList */
 
 ?>
 
@@ -55,13 +36,13 @@ $parkingData = array_map(
 
         <h1>Parkings</h1>
 
-        <?php foreach ($parkings as $parking): ?>
+        <?php foreach ($parkingList->parkings as $parking): ?>
 
           <article class="parking-card">
-            <h2>Parking #<?= $parking->id ?></h2>
+            <h2><?= htmlspecialchars($parking->name) ?></h2>
             <p>
               <strong>Capacité :</strong>
-              <?= $parking->capacity ?> places
+              <?= htmlspecialchars($parking->capacity) ?>
             </p>
             <h3>Horaires</h3>
             <?php if (empty($parking->openingPeriods)): ?>
@@ -70,23 +51,16 @@ $parkingData = array_map(
             <ul>
               <?php foreach ($parking->openingPeriods as $period): ?>
                 <li>
-                  <?= $days[$period['startDay']] ?>
-                  <?= htmlspecialchars($period['startTime']) ?>
-                  →
-                  <?= $days[$period['endDay']] ?>
-                  <?= htmlspecialchars($period['endTime']) ?>
+                  <?= htmlspecialchars($period) ?>
                 </li>
               <?php endforeach; ?>
             </ul>
             <?php endif; ?>
             <h3>Tarifs</h3>
             <ul>
-              <?php foreach ($parking->pricingRules as $rule): ?>
+              <?php foreach ($parking->prices as $price): ?>
               <li>
-                À partir de
-                <?= $rule['fromMinutes'] ?> min :
-                <?= number_format($rule['pricePerQuarterHour'] / 100, 2, ',', ' ') ?>
-                € / 15 min
+                <?= htmlspecialchars($price) ?>
               </li>
               <?php endforeach; ?>
             </ul>
@@ -105,7 +79,7 @@ $parkingData = array_map(
     </script>
 
     <script>
-      const parkings = <?= json_encode($parkingData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
+      const parkings = <?= json_encode($parkingList->markers, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
       const map = L.map('map').setView([46.603354, 1.888334], 6);
 
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',

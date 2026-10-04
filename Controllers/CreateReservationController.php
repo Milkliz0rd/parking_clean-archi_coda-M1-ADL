@@ -7,7 +7,7 @@ class CreateReservationController {
   
   }
 
-  public function handle(array $request): CreateReservationResultDTO {
+  public function handle(array $request, ICreateReservationPresenter $presenter): void {
 
     $startTimestamp = strtotime($request['startDateTime']);
 
@@ -26,6 +26,6 @@ class CreateReservationController {
       $endTimestamp
     );
 
-    return $this->useCase->execute($dto);
+    $this->useCase->execute($dto, $presenter);
   }
 }

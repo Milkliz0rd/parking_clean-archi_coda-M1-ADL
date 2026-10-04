@@ -9,7 +9,7 @@ class CreateReservationUseCase {
   
   }
 
-  public function execute(CreateReservationDTO $dto): CreateReservationResultDTO {
+  public function execute(CreateReservationDTO $dto, ICreateReservationPresenter $presenter): void {
 
     $user = $this->userRepository->findById($dto->userId);
 
@@ -65,11 +65,11 @@ class CreateReservationUseCase {
 
     $this->reservationRepository->save($reservation);
 
-    return new CreateReservationResultDTO(
+    $presenter->present(new CreateReservationResultDTO(
       $dto->parkingId,
       $dto->startTimestamp,
       $dto->endTimestamp,
       $priceInCents
-    );
+    ));
   }
 }
