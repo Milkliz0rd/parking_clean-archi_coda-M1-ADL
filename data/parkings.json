@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "coordinates": {
+            "latitude": 47.9029,
+            "longitude": 1.9093
+        },
+        "capacity": 50,
+        "pricingRules": [
+            {
+                "fromMinutes": 0,
+                "pricePerQuarterHour": 50
+            },
+            {
+                "fromMinutes": 60,
+                "pricePerQuarterHour": 75
+            }
+        ],
+        "openingPeriods": [
+            {
+                "startDay": 1,
+                "startTime": "08:00",
+                "endDay": 1,
+                "endTime": "20:00"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "coordinates": {
+            "latitude": 47.90243,
+            "longitude": 1.90426
+        },
+        "capacity": 50,
+        "pricingRules": [
+            {
+                "fromMinutes": 0,
+                "pricePerQuarterHour": 50
+            }
+        ],
+        "openingPeriods": [
+            {
+                "startDay": 1,
+                "startTime": "07:00",
+                "endDay": 5,
+                "endTime": "23:00"
+            }
+        ]
+    }
+]
