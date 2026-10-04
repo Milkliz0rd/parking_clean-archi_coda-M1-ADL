@@ -11,6 +11,8 @@ spl_autoload_register(function (string $class): void {
     __DIR__ . '/Repositories/',
     __DIR__ . '/UseCases/',
     __DIR__ . '/Controllers/',
+    __DIR__ . '/Presenters/',
+    __DIR__ . '/ViewModels/',
     __DIR__ . '/Infrastructure/Repositories/',
   ];
 
@@ -56,7 +58,9 @@ $action = $_GET['action'] ?? 'parkings';
 try {
   switch ($action) {
     case 'parkings':
-      $parkings =$displayParkingListController->handle();
+      $parkingListPresenter = new DisplayParkingListPresenter();
+      $displayParkingListController->handle($parkingListPresenter);
+      $parkingList = $parkingListPresenter->getViewModel();
 
       require __DIR__ . '/Views/parking-list.php';
       break;
@@ -73,12 +77,16 @@ try {
       break;
 
     case 'create-reservation':
-      $parkings = $displayParkingListController->handle();
+      $parkingListPresenter = new DisplayParkingListPresenter();
+      $displayParkingListController->handle($parkingListPresenter);
+      $parkingList = $parkingListPresenter->getViewModel();
 
       $selectedParkingId = isset($_GET['parkingId']) ? (int) $_GET['parkingId'] : null;
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $result = $createReservationController->handle($_POST);
+        $createReservationPresenter = new CreateReservationPresenter();
+        $createReservationController->handle($_POST, $createReservationPresenter);
+        $confirmation = $createReservationPresenter->getViewModel();
 
         require __DIR__ . '/Views/reservation-success.php';
 

@@ -1,8 +1,6 @@
 <?php
 
-/** @var CreateReservationResultDTO $result */
-
-$priceInEuros = $result->priceInCents / 100;
+/** @var ReservationConfirmationViewModel $confirmation */
 
 ?>
 
@@ -23,29 +21,23 @@ $priceInEuros = $result->priceInCents / 100;
 
     <p>
       Parking :
-      #<?= $result->parkingId ?>
+      <?= htmlspecialchars($confirmation->parking) ?>
     </p>
 
     <p>
       Début :
-      <?= date(
-        'd/m/Y H:i',
-        $result->startTimestamp
-      ) ?>
+      <?= htmlspecialchars($confirmation->start) ?>
     </p>
 
     <p>
       Fin :
-      <?= date(
-        'd/m/Y H:i',
-        $result->endTimestamp
-      ) ?>
+      <?= htmlspecialchars($confirmation->end) ?>
     </p>
 
     <p>
       Prix :
       <strong>
-        <?= number_format($priceInEuros, 2, ',', ' ') ?> €
+        <?= htmlspecialchars($confirmation->price) ?>
       </strong>
     </p>
 

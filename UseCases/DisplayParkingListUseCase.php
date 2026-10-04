@@ -6,7 +6,7 @@ class DisplayParkingListUseCase {
   
   }
 
-  public function execute(): array {
+  public function execute(IDisplayParkingListPresenter $presenter): void {
     $parkings = $this->parkingRepository->findAll();
 
     $parkingList = [];
@@ -45,6 +45,6 @@ class DisplayParkingListUseCase {
       );
     }
 
-    return $parkingList;
+    $presenter->present($parkingList);
   }
 }

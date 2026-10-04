@@ -1,6 +1,6 @@
 <?php
 
-/** @var ParkingListItemDTO[] $parkings */
+/** @var ParkingListViewModel $parkingList */
 /** @var int|null $selectedParkingId */
 
 ?>
@@ -57,13 +57,13 @@
           required
         >
 
-          <?php foreach ($parkings as $parking): ?>
+          <?php foreach ($parkingList->parkings as $parking): ?>
 
             <option
               value="<?= $parking->id ?>"
               <?= $selectedParkingId === $parking->id ? 'selected' : '' ?>
             >
-              Parking #<?= $parking->id ?>
+              <?= htmlspecialchars($parking->name) ?>
             </option>
 
           <?php endforeach; ?>
